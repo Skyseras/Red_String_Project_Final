@@ -1,0 +1,175 @@
+<div class="container-fluid pt-5">
+  <div class="text-center mb-4">
+    <h2 class="section-title px-5">
+      <span class="px-2">{{title}}</span>
+    </h2>
+  </div>
+
+  <div class="row px-xl-5 pb-3" *ngIf="products">
+    <div
+      class="col-lg-3 col-md-6 col-sm-12 pb-1"
+      *ngFor="let p of products._embedded.products"
+    >
+      <div class="card product-item border-0 mb-4">
+        <div
+          class="card-header product-img position-relative overflow-hidden bg-transparent border p-0"
+        >
+         <span *ngIf="p.promotion">
+                <img src="assets/img/hot.png" class="img-thumbnail img-circle" style="   width: 60px;
+                height: 60px;
+                position: absolute;
+                border-radius: 3px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                right: 0;
+                bottom: 0;
+                border-bottom-left-radius: 10px;
+                padding: 10px;">
+              </span>
+          <img
+            class="img-fluid w-100"
+            src="{{ p.imgURL }}"
+            alt=""
+            (click)="onProductDetails(p)"
+          />
+        </div>
+        <div
+          class="card-body border-left border-right text-center p-0 pt-4 pb-3"
+        >
+          <h6 class="text-truncate mb-3">{{ p.name }}</h6>
+          <div class="d-flex justify-content-center">
+            <h6>{{ p.price }} DH</h6>
+
+            <!-- <h6 class="text-muted ml-2"><del>$123.00</del></h6> -->
+          </div>
+        </div>
+        <div class="card-footer d-flex justify-content-between bg-light border">
+          <a (click)="onProductDetails(p)" class="btn btn-sm text-dark p-0"
+          ><i class="fas fa-eye text-primary mr-1"></i>View Detail</a
+          >
+
+          <a *ngIf="authService.isAdmin()" (click)="onEditPhoto(p)" class="btn btn-sm text-dark p-0"
+          ><i class="fas fa-arrow-up text-primary mr-1"></i>Upload pic</a
+          >
+
+          <form #f="ngForm" (ngSubmit)="onAddProductToCaddy(p)">
+
+            <button type="submit" class="btn btn-sm text-dark p-0"
+            ><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
+            </button>
+            <input type="number" name="quantity" [(ngModel)]="p.quantity" ngModel
+                   style="width: 40px; margin-left: 4px;">
+          </form>
+
+
+        </div>
+        <div
+          *ngIf="editPhoto && currentProduct == p"
+          class="d-flex justify-content-between"
+        >
+          <p>
+            <input type="file" (change)="onSelectedFile($event)"/>
+          </p>
+          <button (click)="upload()" class="btn border">upload</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--
+
+<div class="container-fluid pt-5">
+  <div class="text-center mb-4">
+    <h2 class="section-title px-5">
+      <span class="px-2">{{title}}</span>
+    </h2>
+  </div>
+
+  <div class="row px-xl-5 pb-3" *ngIf="products">
+    <div
+      class="col-lg-3 col-md-6 col-sm-12 pb-1"
+      *ngFor="let p of products._embedded.products"
+    >
+      <div class="card product-item border-0 mb-4">
+        <div
+          class="card-header product-img position-relative overflow-hidden bg-transparent border p-0"
+        >
+          <span *ngIf="p.promotion">
+            <img
+              src="assets/img/hot.png"
+              class="img-thumbnail img-circle"
+              style="
+                width: 60px;
+                height: 60px;
+                position: absolute;
+                border-radius: 3px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                right: 0;
+                bottom: 0;
+                border-bottom-left-radius: 10px;
+                padding: 10px;
+              "
+            />
+          </span>
+          <img
+            class="img-fluid w-100"
+            src="{{p.imgURL}}"
+            alt="{{p.name}}"
+            (click)="onProductDetails(p)"
+          />
+        </div>
+        <div
+          class="card-body border-left border-right text-center p-0 pt-4 pb-3"
+        >
+          <h6 class="text-truncate mb-3">{{ p.name }}</h6>
+          <div class="d-flex justify-content-center">
+            <h6>{{ p.price }} DH</h6>
+          </div>
+        </div>
+        <div class="card-footer d-flex justify-content-between bg-light border">
+          <a
+            (click)="onProductDetails(p)"
+            class="btn btn-sm text-dark p-0"
+          ><i class="fas fa-eye text-primary mr-1"></i>View Detail</a
+          >
+
+          <a
+            *ngIf="authService.isAdmin()"
+            (click)="onEditPhoto(p)"
+            class="btn btn-sm text-dark p-0"
+          ><i class="fas fa-arrow-up text-primary mr-1"></i>Upload pic</a
+          >
+
+          <form #f="ngForm" (ngSubmit)="onAddProductToCaddy(p)">
+            <button type="submit" class="btn btn-sm text-dark p-0"
+            ><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</button
+            >
+            <input
+              type="number"
+              name="quantity"
+              [(ngModel)]="p.quantity"
+              ngModel
+              style="width: 40px; margin-left: 4px;"
+            />
+          </form>
+        </div>
+        <div
+          *ngIf="editPhoto && currentProduct == p"
+          class="d-flex justify-content-between"
+        >
+          <p>
+            <input type="file" (change)="onSelectedFile($event)" />
+          </p>
+          <button (click)="upload()" class="btn border">upload</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+-->
